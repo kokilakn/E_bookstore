@@ -1,0 +1,46 @@
+{% extends 'ebook/base.html' %}
+
+{% block main %}
+<div class="row">
+
+
+    <div class="col-md-9">
+        <p><strong>Title:</strong> {{ ebook.title }}</p>
+        <p><strong>Authors:</strong> {{ ebook.authors }}</p>
+        <p><strong>Pages:</strong> {{ ebook.pages }}</p>
+        <p><a class="btn btn-success" href="{{ ebook.ebook.url }}">READ NOW</a>
+        <a class="btn btn-success" href="{{ ebook.ebook.url }}" download>DOWNLOAD NOW</a></p>
+    </div>
+
+    <div class="col">
+        <img src="{{ ebook.image.url }}" width="500" height="500" class="img-responsive"/>
+    </div>
+</div>
+
+<div class="row">
+    <h2>Comments</h2>
+    <hr/>
+    {% for comment in comments %}
+        <div class="card col-12">
+            <p>{{ comment.body }}</p>
+            <span class="text-right">Commented by {{ comment.user.username }} on {{ comment.pub_date_pretty }}</span>
+        </div>
+    {% endfor %}
+</div>
+<div class="row">
+    <div class="col-12">
+        {% if user.is_authenticated %}
+    <form method="post" action="{% url 'comment' ebook.id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="body">Comment:</label>
+            <textarea id="body" name="body" class="form-control" required placeholder="Enter your meaningful comment"></textarea>
+        </div>
+        <input type="submit" value="Comment" class="btn btn-primary">
+    </form>
+    {% endif %}
+    </div>
+
+</div>
+
+{% endblock main %}

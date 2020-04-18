@@ -1,0 +1,86 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Ebook-Store</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-inverse bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url  'home' %}">E-Book Store</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="True" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'ebooks' %}">E-books</a>
+                    </li>
+                    {% if not user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% else %}
+                        <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'staff' %}">Add Ebook</a> </li>
+                        </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript:{document.getElementById('logout_form').submit()}">Logout</a>
+                        </li>
+                        <form id="logout_form" method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <input type="hidden">
+                        </form>
+
+                    {% endif %}
+                </ul>
+              </div>
+              <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">Search</a></li> </ul>
+              </div>
+            </div>
+        </div>
+    </nav>
+
+<main role="main">
+    <div class="container">
+
+        {% if success %}
+        <div class="row pt-3">
+            <div class="alert alert-success col-12">
+                {{ success }}
+            </div>
+        </div>
+        {% endif %}
+        {% block main %}
+        {% endblock main %}
+    </div>
+</main>
+
+<footer class="text-muted">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+    </div>
+</footer>
+
+<script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>
