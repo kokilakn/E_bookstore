@@ -8,7 +8,7 @@ urlpatterns = [
     path('ebooks/', views.ebooks, name='ebooks'),
     path('ebook/<int:ebook_id>', views.ebook, name='ebook'),
     path('ebook/<int:ebook_id>/comment', views.comment, name='comment'),
-    path('admin',views.staff,name='staff'),
+    path('admin/',views.staff,name='staff'),
     path('search/',views.search,name='search'),
     path('search_books/',views.search_books,name='search_books')
     ]
